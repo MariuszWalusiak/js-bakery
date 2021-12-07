@@ -2,12 +2,6 @@
   box-sizing: border-box;
 }
 
-.make-cookie {
-  border: 0px;
-  border-radius: 2px;
-  background-color: rgb(146, 194, 184);
-}
-
 .progress-bar-start {
   position: relative;
   top: 30px;
@@ -21,24 +15,6 @@
   position: absolute;
   background-color: rgb(105, 211, 35);
   height: 10px;
-  width: 0px;
+  width: 0;
   border-radius: 2px;
 }
-
-.progress-bar-animation {
-    animation: progress 4s linear;
-
-}
-
-
-
-
-@keyframes progress {
-  from {
-    width: 0px;
-  }
-  to {
-    width: 100px;
-  }
-}
-
