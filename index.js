@@ -1,17 +1,18 @@
-const cookieButton = document.querySelector("#make-cookie");
+const cookieButton = document.querySelector("#make-dough");
 const progressBar = document.querySelector(".progress-bar");
-const counterBakedCookies = document.querySelector('#counter')
-
+const counterMadeDough = document.querySelector("#counter");
+const flourAvailable = document.querySelector("#flour-available");
+let amountOfFlour = 100;
 
 var duration;
 let acceleration = false;
 progressBar.style.width = "0px";
 console.log(duration);
-let bakedCookies = 0;
+let madeDough = 0;
 
 //function declaration
 function startInterval() {
-  duration = setInterval(runProgressBar, 1000);
+  duration = setInterval(runProgressBar, 200);
   acceleration = true;
   cookieButton.textContent = "zatrzymaj lepienie";
   console.log(duration);
@@ -26,14 +27,15 @@ function stopInterval() {
 
 function runProgressBar() {
   if (progressBar.style.width === "0px") {
-    progressBar.style.width = "25px";
+      reduceFlourAmount();
+      progressBar.style.width = "25px"
   } else if (progressBar.style.width === "25px") {
     progressBar.style.width = "50px";
   } else if (progressBar.style.width === "50px") {
     progressBar.style.width = "75px";
   } else if (progressBar.style.width === "75px") {
     progressBar.style.width = "100px";
-    countBakedCookies();
+    countMadeDough();
   } else if (progressBar.style.width === "100px") {
     progressBar.style.width = "0px";
   }
@@ -41,10 +43,25 @@ function runProgressBar() {
   console.log(progressBar.style.width);
 }
 
-function countBakedCookies(){
-    bakedCookies++;
-    counterBakedCookies.textContent = `Liczba ulepionych ciastowych kul: ${bakedCookies}`
-    return bakedCookies;
+function countMadeDough() {
+  madeDough++;
+  counterMadeDough.textContent = `Liczba ulepionych ciastowych kul: ${madeDough}`;
+  return madeDough;
+}
+
+function updateFlourAvailable() {
+  flourAvailable.textContent = `Ilość mąki: ${amountOfFlour}kg`;
+}
+updateFlourAvailable();
+
+function reduceFlourAmount() {  
+  if (amountOfFlour >= 10) {
+    amountOfFlour -= 10;
+    flourAvailable.textContent = `Ilość mąki: ${amountOfFlour}kg`;
+    return amountOfFlour
+  } else {
+    stopInterval();
+  }
 }
 
 //button init
