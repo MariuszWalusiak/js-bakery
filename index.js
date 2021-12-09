@@ -1,3 +1,5 @@
+
+
 const cookieButton = document.querySelector("#make-dough");
 const progressBar = document.querySelector(".progress-bar");
 const counterMadeDough = document.querySelector("#counter");
@@ -12,36 +14,41 @@ let madeDough = 0;
 
 //function declaration
 function startInterval() {
-  duration = setInterval(runProgressBar, 200);
   isMaking = true;
+  duration = setInterval(runProgressBar, 200);
   cookieButton.textContent = "zatrzymaj lepienie";
   console.log(duration);
 }
 
 function stopInterval() {
   clearInterval(duration);
-  isMaking = false;
   cookieButton.textContent = "ulep ciasto";
   console.log(duration);
 }
 
 function runProgressBar() {
-  if (progressBar.style.width === "0px") {
-      reduceFlourAmount();
-      progressBar.style.width = "25px"
-  } else if (progressBar.style.width === "25px") {
-    progressBar.style.width = "50px";
-  } else if (progressBar.style.width === "50px") {
-    progressBar.style.width = "75px";
-  } else if (progressBar.style.width === "75px") {
-    progressBar.style.width = "100px";
-    countMadeDough();
-  } else if (progressBar.style.width === "100px") {
-    progressBar.style.width = "0px";
+  
+    if (progressBar.style.width === "0px") {
+        reduceFlourAmount();
+        if (isMaking === true) {
+          progressBar.style.width = "25px";}
+        else  {
+          progressBar.style.width = "0px";
+        }  
+      }
+     else if (progressBar.style.width === "25px") {
+      progressBar.style.width = "50px";
+    } else if (progressBar.style.width === "50px") {
+      progressBar.style.width = "75px";
+    } else if (progressBar.style.width === "75px") {
+      progressBar.style.width = "100px";
+      countMadeDough();
+    } else if (progressBar.style.width === "100px") {
+      progressBar.style.width = "0px";
+    }
+    
+    console.log(progressBar.style.width);
   }
-
-  console.log(progressBar.style.width);
-}
 
 function countMadeDough() {
   madeDough++;
@@ -62,9 +69,10 @@ function reduceFlourAmount() {
     return amountOfFlour
   } else {
     stopInterval();
+    isMaking = false;
     cookieButton.setAttribute('disabled','')
-    const alert = document.createElement('span');
-    alert.classList.add('redalert');
+    
+    const alert = addElements("span","redalert")
     document.body.append(alert);
     alert.textContent = 'za mało mąki'
   }
@@ -76,9 +84,18 @@ cookieButton.addEventListener("click", function () {
     startInterval();
   } else {
     stopInterval();
+    isMaking = false;
+    
   }
 });
 
+
+function addElements(element, createdClass){
+  let name = document.createElement(element);
+  name.classList.add(createdClass);
+  return name;
+
+}
 
 
 
