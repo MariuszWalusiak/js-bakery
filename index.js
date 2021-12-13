@@ -53,7 +53,7 @@ function runProgressBar() {
   console.log(progressBar.style.width);
 }
 
-let dough = [];
+let dough = [{size: , elementWHTML}];
 function makeDough() {
   //counter
   madeDough++;
@@ -61,8 +61,8 @@ function makeDough() {
 
   //creating piece of dough
   const pieceOfDough = addElements("div", "dough");
-  dough.push(pieceOfDough);
-  doughTray.append(dough[madeDough - 1]);
+  doughTray.append(pieceOfDough);
+
   //click event
   pieceOfDough.addEventListener("click", makeCookies);
 }
@@ -72,10 +72,10 @@ function makeCookies() {
   const doughArray = document.querySelectorAll(".dough");
   console.log(doughArray);
   madeCookies++;
-  //let variable = 45;
-  //doughArray.forEach((dough) => dough.style.setProperty("--my-width", `${variable}px`)
-  
   // -5px for every dough
+
+  //doughArray.forEach((dough) => dough.style.setProperty("width", `${variable}px`)
+
   madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
 }
 
