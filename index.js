@@ -1,17 +1,22 @@
+//document constans
 const cookieButton = document.querySelector("#make-dough");
 const cookieButtonWrapper = document.querySelector("#button-wrapper");
 const progressBar = document.querySelector(".progress-bar");
 const counterMadeDough = document.querySelector("#counter");
 const flourAvailable = document.querySelector("#flour-available");
 const doughTray = document.querySelector(".dough-wrapper");
+const madeCookiesCounter = document.querySelector("#cookie-counter");
 
+//variables
 let amountOfFlour = 100;
 let duration;
 let isMaking = false;
 let madeDough = 0;
-
 let madeCookies = 0;
+
+//sth
 progressBar.style.width = "0px";
+
 //function declaration
 function startInterval() {
   isMaking = true;
@@ -40,7 +45,7 @@ function runProgressBar() {
     progressBar.style.width = "75px";
   } else if (progressBar.style.width === "75px") {
     progressBar.style.width = "100px";
-    countMadeDough();
+    makeDough();
   } else if (progressBar.style.width === "100px") {
     progressBar.style.width = "0px";
   }
@@ -49,18 +54,29 @@ function runProgressBar() {
 }
 
 let dough = [];
-function countMadeDough() {
+function makeDough() {
+  //counter
   madeDough++;
   counterMadeDough.textContent = `Liczba ulepionych ciastowych kul: ${madeDough}`;
-  const addDough = addElements("div", "dough");
-  dough.push(addDough);
-  console.log(dough);
+
+  //creating piece of dough
+  const pieceOfDough = addElements("div", "dough");
+  dough.push(pieceOfDough);
   doughTray.append(dough[madeDough - 1]);
+  //click event
+  pieceOfDough.addEventListener("click", makeCookies);
 }
 
-function countMadeCookies() {
-  ;
-  console.log(dough);
+//coookie counter update
+function makeCookies() {
+  const doughArray = document.querySelectorAll(".dough");
+  console.log(doughArray);
+  madeCookies++;
+  //let variable = 45;
+  //doughArray.forEach((dough) => dough.style.setProperty("--my-width", `${variable}px`)
+  
+  // -5px for every dough
+  madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
 }
 
 function updateFlourAvailable() {
@@ -73,7 +89,6 @@ function reduceFlourAmount() {
     amountOfFlour -= 10;
     flourAvailable.textContent = `Ilość mąki: ${amountOfFlour}kg`;
     //buttonCookie.removeAttribute('disabled')
-    return amountOfFlour;
   } else {
     stopInterval();
     isMaking = false;
@@ -83,6 +98,12 @@ function reduceFlourAmount() {
     cookieButtonWrapper.append(alert);
     alert.textContent = "za mało mąki";
   }
+}
+
+function addElements(element, createdClass) {
+  let name = document.createElement(element);
+  name.classList.add(createdClass);
+  return name;
 }
 
 //button init
@@ -95,8 +116,6 @@ cookieButton.addEventListener("click", function () {
   }
 });
 
-function addElements(element, createdClass) {
-  let name = document.createElement(element);
-  name.classList.add(createdClass);
-  return name;
-}
+//cookie init
+// dough.forEach(pieceOfDough => pieceOfDough.addEventListener("click", countMadeCookies));
+// cookieButton.addEventListener("click", countMadeCookies);
