@@ -7,6 +7,7 @@ const flourAvailable = document.querySelector("#flour-available");
 const doughTray = document.querySelector(".dough-wrapper");
 const madeCookiesCounter = document.querySelector("#cookie-counter");
 
+
 //variables
 let amountOfFlour = 100;
 let duration;
@@ -53,28 +54,30 @@ function runProgressBar() {
   console.log(progressBar.style.width);
 }
 
-let dough = [{size: , elementWHTML}];
+let dough = [{size: '', elementWHTML: ''}];
 function makeDough() {
   //counter
   madeDough++;
   counterMadeDough.textContent = `Liczba ulepionych ciastowych kul: ${madeDough}`;
 
   //creating piece of dough
-  const pieceOfDough = addElements("div", "dough");
+  const pieceOfDough = createElement("div", "dough");
   doughTray.append(pieceOfDough);
+  pieceOfDough.addEventListener("click", makeCookies);
 
   //click event
-  pieceOfDough.addEventListener("click", makeCookies);
 }
 
-//coookie counter update
-function makeCookies() {
-  const doughArray = document.querySelectorAll(".dough");
-  console.log(doughArray);
-  madeCookies++;
-  // -5px for every dough
 
-  //doughArray.forEach((dough) => dough.style.setProperty("width", `${variable}px`)
+//coookie counter update
+function makeCookies(event) {
+  let widthCookie = 50;
+  madeCookies++;
+  // console.log(event.target.style.width = "20px");
+  event.target.style.width = `${widthCookie} -10px`;  //odnosi sie do width ciastka konkretnego
+  let newWidth = widthCookie -10 
+  this.style.setProperty("width", `${newWidth}px`)
+  
 
   madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
 }
@@ -94,13 +97,13 @@ function reduceFlourAmount() {
     isMaking = false;
     cookieButton.setAttribute("disabled", "");
 
-    const alert = addElements("span", "redalert");
+    const alert = createElement("span", "redalert");
     cookieButtonWrapper.append(alert);
     alert.textContent = "za mało mąki";
   }
 }
 
-function addElements(element, createdClass) {
+function createElement(element, createdClass) {
   let name = document.createElement(element);
   name.classList.add(createdClass);
   return name;
