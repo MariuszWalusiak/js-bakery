@@ -7,7 +7,6 @@ const flourAvailable = document.querySelector("#flour-available");
 const doughTray = document.querySelector(".dough-wrapper");
 const madeCookiesCounter = document.querySelector("#cookie-counter");
 
-
 //variables
 let amountOfFlour = 100;
 let duration;
@@ -54,7 +53,7 @@ function runProgressBar() {
   console.log(progressBar.style.width);
 }
 
-let dough = [{size: '', elementWHTML: ''}];
+let dough = [{ size: "", elementWHTML: "" }];
 function makeDough() {
   //counter
   madeDough++;
@@ -63,23 +62,36 @@ function makeDough() {
   //creating piece of dough
   const pieceOfDough = createElement("div", "dough");
   doughTray.append(pieceOfDough);
-  pieceOfDough.addEventListener("click", makeCookies);
+  const X = makeCookies();
+  pieceOfDough.addEventListener("click", X);
 
   //click event
 }
 
-
 //coookie counter update
-function makeCookies(event) {
+function makeCookies() {
   let widthCookie = 50;
-  madeCookies++;
+  let heightCookie = 50;
   // console.log(event.target.style.width = "20px");
-  event.target.style.width = `${widthCookie} -10px`;  //odnosi sie do width ciastka konkretnego
-  let newWidth = widthCookie -10 
-  this.style.setProperty("width", `${newWidth}px`)
-  
+  // let newWidth = widthCookie - 10;
+  // this.style.setProperty("width", `${newWidth}px`)
 
-  madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
+  function reduceCookieSize(event) {
+    madeCookies++;
+    widthCookie -= 2.5;
+    heightCookie -= 2.5;
+    madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
+    event.target.style.width = widthCookie + "px"; //odnosi sie do width ciastka konkretnego
+    event.target.style.height = heightCookie + "px";
+    if (widthCookie == 0 && heightCookie == 0) {
+      madeDough -= 1;
+      console.log(madeDough);
+      counterMadeDough.textContent = `Liczba ulepionych ciastowych kul: ${madeDough}`;
+    }
+    // console.log(document.querySelectorAll('.dough'))
+  }
+
+  return reduceCookieSize;
 }
 
 function updateFlourAvailable() {
