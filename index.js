@@ -6,6 +6,9 @@ const counterMadeDough = document.querySelector("#counter");
 const flourAvailable = document.querySelector("#flour-available");
 const doughTray = document.querySelector(".dough-wrapper");
 const madeCookiesCounter = document.querySelector("#cookie-counter");
+const ovenButton = document.querySelector("#oven");
+const cookiesInOven = document.querySelector("#cookies-in-oven");
+const ovenWrapper = document.querySelector(".oven-wrapper");
 
 //variables
 let amountOfFlour = 100;
@@ -13,7 +16,7 @@ let duration;
 let isMaking = false;
 let madeDough = 0;
 let madeCookies = 0;
-
+let ovenCookies = 0;
 //sth
 progressBar.style.width = "0px";
 
@@ -75,8 +78,8 @@ function makeCookies() {
   // console.log(event.target.style.width = "20px");
   // let newWidth = widthCookie - 10;
   // this.style.setProperty("width", `${newWidth}px`)
-
   function reduceCookieSize(event) {
+    ovenButton.disabled = false;
     madeCookies++;
     widthCookie -= 2.5;
     heightCookie -= 2.5;
@@ -121,6 +124,33 @@ function createElement(element, createdClass) {
   return name;
 }
 
+// ovenButton.disabled = false;
+
+function func() {
+  // ovenButton.disabled = false;
+
+  if (madeCookies > 0 && ovenCookies < 9) {
+    ovenCookies++;
+    madeCookies--;
+    madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
+    cookiesInOven.textContent = `Liczba ciastek w piecu: ${ovenCookies}/9`;
+    console.log(ovenCookies);
+  } else if (ovenCookies >= 9 || madeCookies === 0) {
+    ovenButton.disabled = true;
+    // console.log("cistkcz uieczone " + ovenCookies)
+    if(ovenCookies >= 9){
+      const ovenAlert = createElement("span", "redalert");
+    ovenWrapper.append(ovenAlert);
+    ovenAlert.textContent = "Piec jest pełen! :(";
+    
+  } else if(madeCookies === 0){
+    const cookieAlert = createElement("span", "redalert");
+    ovenWrapper.append(cookieAlert);
+    cookieAlert.textContent = "Robiliśmy co w naszej mocy, ale mamy za mało ciastek";
+  }
+}
+}
+
 //button init
 cookieButton.addEventListener("click", function () {
   if (isMaking === false) {
@@ -131,6 +161,7 @@ cookieButton.addEventListener("click", function () {
   }
 });
 
+ovenButton.addEventListener("click", func);
 //cookie init
 // dough.forEach(pieceOfDough => pieceOfDough.addEventListener("click", countMadeCookies));
 // cookieButton.addEventListener("click", countMadeCookies);
