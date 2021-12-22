@@ -26,15 +26,27 @@
 .dough-wrapper {
   display: flex;
   flex-direction: row;
-  
-  
 }
 
 .dough {
-
   margin: 20px 10px 0px 0px;
   width: var(--my-width, 50px);
   height: 50px;
   border-radius: 50%;
   background-color: yellow;
+}
+
+.oven {
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 5px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.oven-item {
+  border: 1px solid black;
 }

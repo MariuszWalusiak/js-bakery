@@ -6,9 +6,10 @@ const counterMadeDough = document.querySelector("#counter");
 const flourAvailable = document.querySelector("#flour-available");
 const doughTray = document.querySelector(".dough-wrapper");
 const madeCookiesCounter = document.querySelector("#cookie-counter");
-const ovenButton = document.querySelector("#oven");
+const ovenButton = document.querySelector("#buttonOven");
 const cookiesInOven = document.querySelector("#cookies-in-oven");
 const ovenWrapper = document.querySelector(".oven-wrapper");
+const oven = document.querySelector(".oven");
 
 //variables
 let amountOfFlour = 100;
@@ -17,6 +18,7 @@ let isMaking = false;
 let madeDough = 0;
 let madeCookies = 0;
 let ovenCookies = 0;
+
 //sth
 progressBar.style.width = "0px";
 
@@ -125,8 +127,7 @@ function createElement(element, createdClass) {
 }
 
 // ovenButton.disabled = false;
-
-function func() {
+function bakeCookie() {
   // ovenButton.disabled = false;
 
   if (madeCookies > 0 && ovenCookies < 9) {
@@ -135,20 +136,39 @@ function func() {
     madeCookiesCounter.textContent = `Liczba ulepionych ciastek: ${madeCookies}`;
     cookiesInOven.textContent = `Liczba ciastek w piecu: ${ovenCookies}/9`;
     console.log(ovenCookies);
+    const cookie = createElement("div", "dough");
+    cookie.classList.add("oven-item");
+    oven.append(cookie);
+    cookie.style.backgroundColor = "yellow";
+    const cookieDuration = setInterval(runCookieProgressColor, 3000);
+
+    function runCookieProgressColor() {
+      if (cookie.style.backgroundColor === "yellow") {
+        cookie.style.backgroundColor = "orange";
+      } else if (cookie.style.backgroundColor === "orange") {
+        cookie.style.backgroundColor = "brown";
+      } else if (cookie.style.backgroundColor === "brown") {
+        cookie.style.backgroundColor = "black";
+      } else if (cookie.style.backgroundColor === "black") {
+        clearInterval(cookieDuration);
+        cookie.remove();
+      }
+    }
+
   } else if (ovenCookies >= 9 || madeCookies === 0) {
     ovenButton.disabled = true;
     // console.log("cistkcz uieczone " + ovenCookies)
-    if(ovenCookies >= 9){
+    if (ovenCookies >= 9) {
       const ovenAlert = createElement("span", "redalert");
-    ovenWrapper.append(ovenAlert);
-    ovenAlert.textContent = "Piec jest pełen! :(";
-    
-  } else if(madeCookies === 0){
-    const cookieAlert = createElement("span", "redalert");
-    ovenWrapper.append(cookieAlert);
-    cookieAlert.textContent = "Robiliśmy co w naszej mocy, ale mamy za mało ciastek";
+      ovenWrapper.append(ovenAlert);
+      ovenAlert.textContent = "Piec jest pełen! :(";
+    } else if (madeCookies === 0) {
+      const cookieAlert = createElement("span", "redalert");
+      ovenWrapper.append(cookieAlert);
+      cookieAlert.textContent =
+        "Robiliśmy co w naszej mocy, ale mamy za mało ciastek";
+    }
   }
-}
 }
 
 //button init
@@ -161,7 +181,7 @@ cookieButton.addEventListener("click", function () {
   }
 });
 
-ovenButton.addEventListener("click", func);
+ovenButton.addEventListener("click", bakeCookie);
 //cookie init
 // dough.forEach(pieceOfDough => pieceOfDough.addEventListener("click", countMadeCookies));
 // cookieButton.addEventListener("click", countMadeCookies);
