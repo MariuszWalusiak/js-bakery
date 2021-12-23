@@ -10,6 +10,10 @@ const ovenButton = document.querySelector("#buttonOven");
 const cookiesInOven = document.querySelector("#cookies-in-oven");
 const ovenWrapper = document.querySelector(".oven-wrapper");
 const oven = document.querySelector(".oven");
+const finishedCookiesCounter = document.querySelector(
+  "#counter-finished-cookies"
+);
+const moneyEarnedContent = document.querySelector("#money-earned");
 
 //variables
 let amountOfFlour = 100;
@@ -18,6 +22,8 @@ let isMaking = false;
 let madeDough = 0;
 let madeCookies = 0;
 let ovenCookies = 0;
+let finishedCookies = 0;
+let moneyEarned = 0;
 
 //sth
 progressBar.style.width = "0px";
@@ -137,6 +143,7 @@ function bakeCookie() {
     cookiesInOven.textContent = `Liczba ciastek w piecu: ${ovenCookies}/9`;
     console.log(ovenCookies);
     const cookie = createElement("div", "dough");
+
     cookie.classList.add("oven-item");
     oven.append(cookie);
     cookie.style.backgroundColor = "yellow";
@@ -152,8 +159,24 @@ function bakeCookie() {
       } else if (cookie.style.backgroundColor === "black") {
         clearInterval(cookieDuration);
         cookie.remove();
+        ovenCookies--;
+        cookiesInOven.textContent = `Liczba ciastek w piecu: ${ovenCookies}/9`;
       }
     }
+
+    cookie.addEventListener("click", function(event) {
+    
+      if (event.target.style.backgroundColor === "brown") {
+        finishedCookies += 1;
+        finishedCookiesCounter.textContent = `Liczba gotowych ciastek: ${finishedCookies}`;
+        console.log(event.target);
+        buyCookie();
+      }
+      event.target.remove();
+      ovenCookies--;  
+      cookiesInOven.textContent = `Liczba ciastek w piecu: ${ovenCookies}/9`;
+      clearInterval(cookieDuration);
+    });
 
   } else if (ovenCookies >= 9 || madeCookies === 0) {
     ovenButton.disabled = true;
@@ -171,6 +194,7 @@ function bakeCookie() {
   }
 }
 
+
 //button init
 cookieButton.addEventListener("click", function () {
   if (isMaking === false) {
@@ -185,3 +209,28 @@ ovenButton.addEventListener("click", bakeCookie);
 //cookie init
 // dough.forEach(pieceOfDough => pieceOfDough.addEventListener("click", countMadeCookies));
 // cookieButton.addEventListener("click", countMadeCookies);
+// console.log((Math.floor(Math.random() * 4) + 3) * 1000);
+// console.log(Math.floor(Math.random() * 10) + 1);
+
+// setInterval(buyCookie, (Math.floor(Math.random() * 10) + 1) * 1000);
+
+function buyCookie() {
+  let randomCookiesNumber = Math.floor(Math.random() * 10) + 1;
+  let randomTime = (Math.floor(Math.random() * 4) + 3) * 1000;
+  if (finishedCookies > 0) {
+    if (finishedCookies >= randomCookiesNumber) {
+      moneyEarned = randomCookiesNumber * 5;
+      finishedCookies -= randomCookiesNumber;
+      moneyEarnedContent.textContent = `Zarobiliśmy: ${moneyEarned}`;
+      finishedCookiesCounter.textContent = `Liczba gotowych ciastek: ${finishedCookies}`;    
+    } else if (finishedCookies < randomCookiesNumber) {
+      //finishedCookie
+    }
+    setTimeout(buyCookie, randomTime);
+  } else {
+    //do nothing
+  }
+  console.log(randomCookiesNumber);
+  console.log(randomTime);
+}
+
