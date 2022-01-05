@@ -12,6 +12,7 @@ const ovenWrapper = document.querySelector(".oven-wrapper");
 const oven = document.querySelector(".oven");
 const finishedCookiesCounter = document.querySelector("#counter-finished-cookies");
 const moneyEarnedContent = document.querySelector("#money-earned");
+const flourButton = document.querySelector('#flour-button');
 
 //variables
 let amountOfFlour = 100;
@@ -255,3 +256,14 @@ function buyCookie() {
 }
 
 buyCookie();
+
+function updateFlour(){
+  if(moneyEarned >= 50){
+  moneyEarned -= 50;
+  amountOfFlour +=100;
+  moneyEarnedContent.textContent = `Zarobiliśmy: ${moneyEarned} PLN`;
+  flourAvailable.textContent = `Ilość mąki: ${amountOfFlour}kg`;
+}
+}
+
+flourButton.addEventListener('click', updateFlour);
